@@ -9,7 +9,7 @@
       </a-layout-content>
       <a-layout-footer class="footer">
         <a href="https://yupi.icu" target="_blank">
-          编程导航知识星球 by 程序员鱼皮
+          星辰学习记账清单 by 林寻
         </a>
       </a-layout-footer>
     </a-layout>

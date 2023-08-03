@@ -22,9 +22,70 @@
       </a-menu>
     </a-col>
     <a-col flex="100px">
-      <div>
-        {{ store.state.user?.loginUser?.userName ?? "未登录" }}
-      </div>
+      <a-dropdown trigger="hover">
+        <a-avatar shape="circle">
+          <template
+            v-if="store.state.user.loginUser && store.state.user.loginUser.userRole as String !== ACCESS_ENUM.NOT_LOGIN"
+          >
+            <template v-if="store.state.user.loginUser.userAvatar">
+              <img
+                alt="avatar"
+                :src="store.state.user.loginUser.userAvatar"
+                class="userAvatar"
+              />
+            </template>
+            <template v-else>
+              <a-avatar>
+                <IconUser />
+              </a-avatar>
+            </template>
+          </template>
+          <template v-else>
+            <a-avatar>未登录</a-avatar>
+          </template>
+        </a-avatar>
+        <template #content>
+          <template
+            v-if="store.state.user.loginUser && store.state.user.loginUser.userRole as
+            string !== ACCESS_ENUM.NOT_LOGIN"
+          >
+            <a-doption>
+              <template #icon>
+                <icon-idcard />
+              </template>
+              <template #default>
+                <a-anchor-link>个人信息</a-anchor-link>
+              </template>
+            </a-doption>
+            <a-doption>
+              <template #icon>
+                <icon-poweroff />
+              </template>
+              <template #default>
+                <a-anchor-link @click="logout">退出登录</a-anchor-link>
+              </template>
+            </a-doption>
+          </template>
+          <template v-else>
+            <a-doption>
+              <template #icon>
+                <icon-idcard />
+              </template>
+              <template #default>
+                <a-anchor-link href="/user/register">注册 </a-anchor-link>
+              </template>
+            </a-doption>
+            <a-doption>
+              <template #icon>
+                <icon-poweroff />
+              </template>
+              <template #default>
+                <a-anchor-link href="/user/login">登录 </a-anchor-link>
+              </template>
+            </a-doption>
+          </template>
+        </template>
+      </a-dropdown>
     </a-col>
   </a-row>
 </template>
@@ -36,6 +97,7 @@ import { computed, ref } from "vue";
 import { useStore } from "vuex";
 import checkAccess from "@/access/checkAccess";
 import ACCESS_ENUM from "@/access/accessEnum";
+import { UserControllerService } from "../../generated";
 
 const router = useRouter();
 const store = useStore();
@@ -77,6 +139,10 @@ const doMenuClick = (key: string) => {
   router.push({
     path: key,
   });
+};
+const logout = () => {
+  UserControllerService.userLogoutUsingPost();
+  location.reload();
 };
 </script>
 
