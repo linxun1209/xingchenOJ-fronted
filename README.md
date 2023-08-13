@@ -1,4 +1,4 @@
-# yuoj-frontend
+# xingchenoj-frontend
 
 ## Project setup
 ```

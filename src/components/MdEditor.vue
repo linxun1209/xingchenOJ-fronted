@@ -12,6 +12,8 @@ import gfm from "@bytemd/plugin-gfm";
 import highlight from "@bytemd/plugin-highlight";
 import { Editor, Viewer } from "@bytemd/vue-next";
 import { ref, withDefaults, defineProps } from "vue";
+import locale from "@bytemd/locales/zh_Hans.json";
+import math from "@bytemd/plugin-math";
 
 /**
  * 定义组件属性类型
@@ -25,6 +27,7 @@ interface Props {
 const plugins = [
   gfm(),
   highlight(),
+  math(),
   // Add more plugins here
 ];
 
@@ -38,6 +41,13 @@ const props = withDefaults(defineProps<Props>(), {
     console.log(v);
   },
 });
+/**
+ * 安装数字模块
+ */
+const value = ref<string>("");
+const handleChange = (v: string) => {
+  value.value = v;
+};
 </script>
 
 <style>
