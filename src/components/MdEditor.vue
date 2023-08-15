@@ -12,7 +12,7 @@ import gfm from "@bytemd/plugin-gfm";
 import highlight from "@bytemd/plugin-highlight";
 import { Editor, Viewer } from "@bytemd/vue-next";
 import { ref, withDefaults, defineProps } from "vue";
-import locale from "@bytemd/locales/zh_Hans.json";
+import locale from "../locales/zh_Hans.json";
 import math from "@bytemd/plugin-math";
 
 /**
@@ -23,7 +23,13 @@ interface Props {
   mode?: string;
   handleChange: (v: string) => void;
 }
-
+// gfm({
+//   locale: gfmLocale,
+// }),
+//   highlight(),
+//   math({
+//     locale: mathLocale,
+//   }),
 const plugins = [
   gfm(),
   highlight(),
@@ -38,16 +44,16 @@ const props = withDefaults(defineProps<Props>(), {
   value: () => "",
   mode: () => "split",
   handleChange: (v: string) => {
-    console.log(v);
+    console.log(v + "");
   },
 });
 /**
  * 安装数字模块
  */
-const value = ref<string>("");
-const handleChange = (v: string) => {
-  value.value = v;
-};
+// const value = ref<string>("");
+// const handleChange = (v: string) => {
+//   value.value = v;
+// };
 </script>
 
 <style>
