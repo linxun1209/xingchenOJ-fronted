@@ -102,8 +102,9 @@ import { onMounted, ref } from "vue";
 import MdEditor from "@/components/MdEditor.vue";
 import { QuestionControllerService } from "../../../generated";
 import message from "@arco-design/web-vue/es/message";
+import store from "@/store";
+import router from "@/router";
 import { useRoute } from "vue-router";
-
 const route = useRoute();
 // 如果页面地址包含 update，视为更新页面
 const updatePage = route.path.includes("update");
@@ -174,14 +175,16 @@ onMounted(() => {
 });
 
 const doSubmit = async () => {
-  console.log(form.value);
   // 区分更新还是创建
   if (updatePage) {
     const res = await QuestionControllerService.updateQuestionUsingPost(
       form.value
     );
+    console.log(res.code);
     if (res.code === 0) {
       message.success("更新成功");
+      await store.dispatch("user/getLoginUser");
+      window.location.href = "/manage/question/";
     } else {
       message.error("更新失败，" + res.message);
     }
@@ -189,8 +192,11 @@ const doSubmit = async () => {
     const res = await QuestionControllerService.addQuestionUsingPost(
       form.value
     );
+    console.log(res.code);
     if (res.code === 0) {
       message.success("创建成功");
+      await store.dispatch("user/getLoginUser");
+      window.location.href = "/manage/question/";
     } else {
       message.error("创建失败，" + res.message);
     }

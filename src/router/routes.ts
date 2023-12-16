@@ -1,16 +1,14 @@
 import { RouteRecordRaw } from "vue-router";
-import HomeView from "@/views/ExampleView.vue";
 import UserLayout from "@/layouts/UserLayout.vue";
 import UserLoginView from "@/views/user/UserLoginView.vue";
 import UserRegisterView from "@/views/user/UserRegisterView.vue";
-import AdminView from "@/views/AdminView.vue";
 import NoAuthView from "@/views/NoAuthView.vue";
 import ACCESS_ENUM from "@/access/accessEnum";
 import AddQuestionView from "@/views/question/AddQuestionView.vue";
 import ManageQuestionView from "@/views/question/ManageQuestionView.vue";
 import QuestionsView from "@/views/question/QuestionsView.vue";
 import ViewQuestionView from "@/views/question/ViewQuestionView.vue";
-
+import QuestionSubmitView from "@/views/question/QuestionSubmitView.vue";
 export const routes: Array<RouteRecordRaw> = [
   {
     path: "/user",
@@ -33,10 +31,16 @@ export const routes: Array<RouteRecordRaw> = [
     },
   },
   {
-    path: "/questions",
+    path: "/",
     name: "浏览题目",
     component: QuestionsView,
   },
+  {
+    path: "/question_submit",
+    name: "浏览题目提交",
+    component: QuestionSubmitView,
+  },
+
   {
     path: "/view/question/:id",
     name: "在线做题",
@@ -72,11 +76,11 @@ export const routes: Array<RouteRecordRaw> = [
       access: ACCESS_ENUM.ADMIN,
     },
   },
-  {
-    path: "/",
-    name: "主页",
-    component: QuestionsView,
-  },
+  // {
+  //   path: "/",
+  //   name: "浏览题目",
+  //   component: QuestionsView,
+  // },
   {
     path: "/noAuth",
     name: "无权限",

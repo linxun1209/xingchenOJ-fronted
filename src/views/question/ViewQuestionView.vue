@@ -75,7 +75,6 @@ import {
   Question,
   QuestionControllerService,
   QuestionSubmitAddRequest,
-  QuestionSubmitControllerService,
   QuestionVO,
 } from "../../../generated";
 import message from "@arco-design/web-vue/es/message";
@@ -116,7 +115,7 @@ const doSubmit = async () => {
     return;
   }
 
-  const res = await QuestionSubmitControllerService.doQuestionSubmitUsingPost({
+  const res = await QuestionControllerService.doQuestionSubmitUsingPost({
     ...form.value,
     questionId: question.value.id,
   });
@@ -125,6 +124,20 @@ const doSubmit = async () => {
   } else {
     message.error("提交失败," + res.message);
   }
+};
+
+const tagsObjtList = {
+  default: { text: "default", color: "#168cff" },
+  简单: { text: "简单", color: "#0fc6c2" },
+  中等: { text: "中等", color: "#ffb400" },
+  困难: { text: "困难", color: "#f53f3f" },
+};
+
+const getTagStyleColor = (tag: string) => {
+  if (tag == "" || tag == undefined || tagsObjtList[tag] == undefined) {
+    return tagsObjtList["default"].color;
+  }
+  return tagsObjtList[tag].color;
 };
 
 /**
