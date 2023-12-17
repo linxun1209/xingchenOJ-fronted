@@ -103,7 +103,9 @@
               </a-tab-pane>
             </a-tabs>
           </a-tab-pane>
-          <a-tab-pane key="comments" title="评论"> 暂未开放评论</a-tab-pane>
+          <a-tab-pane key="comments" title="评论"
+            ><a href="/user"></a> 暂未开放评论</a-tab-pane
+          >
         </a-tabs>
       </a-col>
       <a-col :span="12">

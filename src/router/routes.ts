@@ -10,6 +10,9 @@ import QuestionsView from "@/views/question/QuestionsView.vue";
 import ViewQuestionView from "@/views/question/ViewQuestionView.vue";
 import QuestionSubmitView from "@/views/question/QuestionSubmitView.vue";
 import ViewQuestionSubmitView from "@/views/question/ViewQuestionSubmitView.vue";
+import UserManageView from "@/views/user/UserManageView.vue";
+import UserInfoView from "@/views/user/UserInfoView.vue";
+
 export const routes: Array<RouteRecordRaw> = [
   {
     path: "/user",
@@ -86,11 +89,14 @@ export const routes: Array<RouteRecordRaw> = [
       access: ACCESS_ENUM.ADMIN,
     },
   },
-  // {
-  //   path: "/",
-  //   name: "浏览题目",
-  //   component: QuestionsView,
-  // },
+  {
+    path: "/manage/user",
+    name: "用户管理",
+    component: UserManageView,
+    meta: {
+      access: ACCESS_ENUM.ADMIN,
+    },
+  },
   {
     path: "/noAuth",
     name: "无权限",
