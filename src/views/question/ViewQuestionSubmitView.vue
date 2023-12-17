@@ -132,6 +132,60 @@
           @click="doSubmit"
           >提 交
         </a-button>
+
+        <a-descriptions title="" :column="{ xs: 1, md: 2, lg: 2 }">
+          <a-descriptions-item label="消耗内存">
+            <template
+              v-if="
+                !judgeInfo ||
+                !judgeInfo.memory ||
+                judgeInfo.memory == null ||
+                judgeInfo.memory == undefined
+              "
+            >
+              <span>0 byte</span>
+            </template>
+            <template v-else-if="judgeInfo.memory <= 1024">
+              <span>{{ judgeInfo.memory }} byte</span>
+            </template>
+            <template v-else-if="judgeInfo.memory <= 1024 * 1024">
+              <span>{{ (judgeInfo.memory / 1024).toFixed(2) }} KB</span>
+            </template>
+            <template v-else>
+              <span
+                >{{ (judgeInfo.memory / (1024 * 1024)).toFixed(2) }} MB</span
+              >
+            </template>
+          </a-descriptions-item>
+
+          <a-descriptions-item label="执行用时">
+            <template
+              v-if="
+                !judgeInfo ||
+                !judgeInfo.time ||
+                judgeInfo.time == null ||
+                judgeInfo.time == undefined
+              "
+            >
+              <span>0 MS</span>
+            </template>
+            <template v-else-if="judgeInfo.time < 1000">
+              <span>{{ judgeInfo.time }} MS</span>
+            </template>
+            <template v-else>
+              <span>{{ (judgeInfo.time / 1000).toFixed(2) }} S</span>
+            </template>
+          </a-descriptions-item>
+
+          <a-descriptions-item label="详细输出">
+            <a-textarea
+              :model-value="
+                judgeInfo?.detail ? judgeInfo?.detail : judgeInfo?.message
+              "
+              :auto-size="{ minRows: 2, maxRows: 5 }"
+            />
+          </a-descriptions-item>
+        </a-descriptions>
       </a-col>
     </a-row>
   </div>
@@ -140,6 +194,7 @@
 <script setup lang="ts">
 import { onMounted, defineProps, ref, withDefaults, watchEffect } from "vue";
 import {
+  JudgeInfo,
   QuestionControllerService,
   QuestionSubmitAddRequest,
   QuestionSubmitQueryRequest,
@@ -162,6 +217,8 @@ const plugins = [
   highlight(),
   // Add more plugins here
 ];
+
+const judgeInfo = ref<JudgeInfo>();
 
 const searchParams = ref<QuestionSubmitQueryRequest>({
   pageSize: 5,
@@ -236,9 +293,7 @@ const loadData = async () => {
     props.id as any
   );
   if (res.code === 0) {
-    console.log(res);
     question.value = res.data;
-    console.log(question.value);
     isLoading.value = false;
   } else {
     message.error("加载失败" + res.message);

@@ -8,9 +8,27 @@
         <router-view />
       </a-layout-content>
       <a-layout-footer class="footer">
-        <a href="https://yupi.icu" target="_blank">
-          星辰学习记账清单 by 林寻
-        </a>
+        <div style="margin-bottom: 8px">
+          <a
+            href="https://github.com/linxun1209/xingchenOJ-backend"
+            target="_blank"
+            >GitHub</a
+          >
+          <a href="https://github.com/linxun1209" target="_blank"
+            ><icon-github :size="14"
+          /></a>
+          <a
+            href="https://blog.csdn.net/weixin_60257072?spm=1000.2115.3001.5343"
+            target="_blank"
+            ><icon-book :size="14"
+          /></a>
+        </div>
+        <div>
+          <a style="olor: rgba(0, 0, 0, 0.88); margin-right: 4px"
+            ><icon-copyright :size="16"
+          /></a>
+          <a style="color: rgba(0, 0, 0, 0.88)">2023 程序员-林寻出品</a>
+        </div>
       </a-layout-footer>
     </a-layout>
   </div>
