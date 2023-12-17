@@ -46,10 +46,22 @@
           placeholder="请再次输入密码"
         />
       </a-form-item>
+      <div>
+        <a
+          style="
+            float: right;
+            margin-bottom: 16px;
+            cursor: pointer;
+            color: #1677ff;
+          "
+          @click="ToLogin"
+          >已有账号，去登陆!</a
+        >
+      </div>
       <a-form-item>
-        <a-button type="primary" html-type="submit" style="margin: 0 auto">
-          注册
-        </a-button>
+        <a-button type="primary" html-type="submit" style="width: 320px"
+          >注 册</a-button
+        >
       </a-form-item>
     </a-form>
   </div>
@@ -66,6 +78,15 @@ const form = reactive<UserRegisterRequest>({
   userPassword: "",
   checkPassword: "",
 });
+
+// 去登录页面
+const ToLogin = () => {
+  router.push({
+    path: "/user/login",
+    replace: true,
+  });
+};
+
 const handleSubmit = async () => {
   if (form.userAccount.length < 4 || form.userPassword.length < 6) {
     return;
