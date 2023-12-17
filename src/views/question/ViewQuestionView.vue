@@ -163,6 +163,23 @@ const plugins = [
   // Add more plugins here
 ];
 
+//todo 根据选择的编程语言，设置代码的模版内容
+// const GetAnswerTemplate = () => {
+//   if (question.value?.answerTemplate == "") {
+//     return;
+//   }
+//   const answerTemplate = JSON.parse(question.value?.answerTemplate ?? "{}");
+//   console.log("answerTemplate", answerTemplate);
+//   if (
+//     form.value.language &&
+//     answerTemplate[form.value.language] &&
+//     answerTemplate[form.value.language] != null
+//   ) {
+//     form.value.code = answerTemplate[form.value.language];
+//   }
+//   // console.log("更换语言的答案模版", form.value.code);
+// };
+
 const searchParams = ref<QuestionSubmitQueryRequest>({
   pageSize: 5,
   current: 1,

@@ -111,7 +111,7 @@
           <a-form-item field="language" label="语言">
             <a-select
               :style="{ width: '150px' }"
-              placeholder="选择语言"
+              placeholder="选择编程语言"
               v-model="form.language"
             >
               <a-option>java</a-option>
