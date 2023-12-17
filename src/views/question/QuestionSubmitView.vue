@@ -141,16 +141,12 @@
             store.state.user.loginUser.userRole == ACCESS_ENUM.ADMIN
           "
         >
-          <a-button> 查看代码 </a-button>
-
-          <!--          &lt;!&ndash; <a-space> &ndash;&gt;-->
-          <!--          <a-button-->
-          <!--            type="secondary"-->
-          <!--            @click="toViewQuestionSubmitViewPage(record)"-->
-          <!--          >-->
-          <!--           -->
-          <!--          </a-button>-->
-          <!-- </a-space> -->
+          <a-button
+            type="secondary"
+            @click="toViewQuestionSubmitViewPage(record)"
+          >
+            查看代码
+          </a-button>
         </template>
         <template v-else> </template>
       </template>
@@ -159,11 +155,12 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, watchEffect } from "vue";
+import { onBeforeUnmount, onMounted, ref, watchEffect } from "vue";
 import {
   Question,
   QuestionControllerService,
   QuestionSubmitQueryRequest,
+  QuestionSubmitVO,
 } from "../../../generated";
 import message from "@arco-design/web-vue/es/message";
 import { useRouter } from "vue-router";
@@ -270,11 +267,31 @@ const loadData = async () => {
   }
 };
 
+const refreshFlag = ref(false); // 哨兵变量
+
+// 设置定时器，每隔一段时间执行一次 loadData 函数
+const intervalId = setInterval(() => {
+  if (refreshFlag.value) {
+    console.log("定时任务");
+    loadData();
+    refreshFlag.value = false; // 重置哨兵变量
+  }
+}, 5000); // 每隔（3 秒）执行一次
+
 /**
  * 监听 searchParams 变量，改变时触发页面的重新加载
  */
 watchEffect(() => {
+  if (!refreshFlag.value) {
+    refreshFlag.value = true; // 设置哨兵变量，触发定时任务
+  }
   loadData();
+});
+
+// 在组件销毁时清除定时器
+// eslint-disable-next-line no-undef
+onBeforeUnmount(() => {
+  clearInterval(intervalId);
 });
 
 /**
@@ -336,6 +353,10 @@ const columns = [
   },
 ];
 
+/**
+ * 分页
+ * @param page
+ */
 const onPageChange = (page: number) => {
   searchParams.value = {
     ...searchParams.value,
@@ -344,6 +365,15 @@ const onPageChange = (page: number) => {
 };
 
 const router = useRouter();
+
+/**
+ * 跳转到已提交题目详情界面
+ */
+const toViewQuestionSubmitViewPage = (questionSumit: QuestionSubmitVO) => {
+  router.push({
+    path: `/view/question_submit/${questionSumit.id}`,
+  });
+};
 
 /**
  * 跳转到做题页面
