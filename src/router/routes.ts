@@ -29,6 +29,11 @@ export const routes: Array<RouteRecordRaw> = [
         name: "用户注册",
         component: UserRegisterView,
       },
+      {
+        path: "/user/UserInfo",
+        name: "用户注册",
+        component: UserInfoView,
+      },
     ],
     meta: {
       hideInMenu: true,
